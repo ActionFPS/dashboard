@@ -16,7 +16,8 @@ test:
 	python -m pytest
 
 clean:
-	rm -r out
+	rm -rf out
+	rm -f games.ndjson
 
-preview:
+preview: build
 	cd out && python -m SimpleHTTPServer
