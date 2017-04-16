@@ -10,3 +10,15 @@ See live: https://actionfps.github.io/dashboard/
 With [pip](https://en.wikipedia.org/wiki/Pip_(package_manager)) and Python 2.7 installed:
 
 Run `make pip preview` and then go to http://localhost:8000
+
+# Usage
+
+We're using [Google Charts](https://developers.google.com/chart/) and Python for this.
+
+This is supposed to make contributions to ActionFPS easier, as a testing ground if you like.
+
+Pages are hosted using [GitHub Pages](https://pages.github.com/) and built on Travis CI.
+
+The script downloads historical games, and then can do a batch processing on them.
+
+You MAY use another language than Python, so long as it runs and you've documented it!
