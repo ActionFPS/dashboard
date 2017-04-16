@@ -3,6 +3,7 @@
 	clean \
 	test \
 	preview \
+	pip \
 
 build: games.ndjson
 	mkdir -p out
@@ -21,3 +22,6 @@ clean:
 
 preview: build
 	cd out && python -m SimpleHTTPServer
+
+pip:
+	python -m pip install -r requirements.txt

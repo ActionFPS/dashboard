@@ -6,4 +6,7 @@ This dashboard runs on [Travis](https://travis-ci.org/ActionFPS/dashboard) eithe
 
 See live: https://actionfps.github.io/dashboard/
 
-To build locally, run `make preview` and then go to http://localhost:8000
+# Local run
+With [pip](https://en.wikipedia.org/wiki/Pip_(package_manager)) and Python 2.7 installed:
+
+Run `make pip preview` and then go to http://localhost:8000
