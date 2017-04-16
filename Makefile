@@ -13,7 +13,7 @@ games.ndjson:
 	wget -O games.ndjson 'https://actionfps.com/all/games.ndjson?since=2017'
 
 test:
-	pytest
+	python -m pytest
 
 clean:
 	rm -r out
