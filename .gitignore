@@ -1,4 +1,5 @@
 games.ndjson
+players.json
 out/
 .cache/
 __pycache__/
