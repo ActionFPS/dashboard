@@ -40,7 +40,7 @@ def convert_monitor(monitor):
     import json
     for log in monitor['monitors'][0]['logs']:
         if log['type'] == 1:
-            yield {'when': datetime.datetime.fromtimestamp(log['datetime']).strftime('%Y-%m-%d %H:%M:%S'),
+            yield {'when': datetime.datetime.utcfromtimestamp(log['datetime']).strftime('%Y-%m-%d %H:%M:%S'),
             'duration': str(datetime.timedelta(seconds = log['duration']))}
 
 def build_monitor():
@@ -63,5 +63,5 @@ def test_players():
 def test_monitor():
     text = '{"monitors":[{"logs":[{"type":1,"datetime":1470592446,"duration":858}]}]}'
     assert list(convert_monitor(json.loads(text))) == [
-        {'duration': '0:14:18', 'when': '2016-08-08 01:54:06'}
+        {'duration': '0:14:18', 'when': '2016-08-07 17:54:06'}
     ]
