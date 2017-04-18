@@ -7,10 +7,15 @@
 
 TARGET = .
 export GAMES_NDJSON = $(TARGET)/games.ndjson
+export PLAYERS_JSON = $(TARGET)/players.json
 export PUB_MONITOR_JSON = $(TARGET)/pub-monitor.json
 export MONITOR_API_KEY = m778017233-4e4ee163a27dda0f894c5932
 
-build: $(GAMES_NDJSON) $(PUB_MONITOR_JSON)
+build: \
+	$(GAMES_NDJSON) \
+	$(PUB_MONITOR_JSON) \
+	$(PLAYERS_JSON) \
+	
 	mkdir -p out
 	cp index.html out/index.html
 	python test_build.py
@@ -24,6 +29,9 @@ $(PUB_MONITOR_JSON):
 
 $(GAMES_NDJSON):
 	wget -O $(GAMES_NDJSON) 'https://actionfps.com/all/games.ndjson?since=2017'
+
+$(PLAYERS_JSON):
+	wget -O $(PLAYERS_JSON) 'https://actionfps.com/players/?format=json'
 
 test:
 	python -m pytest

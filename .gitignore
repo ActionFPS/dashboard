@@ -1,6 +1,7 @@
 pub-monitor.json
 *.pyc
 games.ndjson
+players.json
 out/
 .cache/
 __pycache__/

@@ -12,6 +12,8 @@
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
+
+
       $.getJSON('chart.json', function(jsonData) {
 var mapper = { rows: [], cols: [{id: 'date', label: 'Date', type: 'date'},
 {id: 'count', label: 'Game Count', type: 'number'}
@@ -34,15 +36,45 @@ var mapper = { rows: [], cols: [{id: 'date', label: 'Date', type: 'date'},
       // Instantiate and draw our chart, passing in some options.
       var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
       chart.draw(data, {width: 640, height: 480});
-    })}
+    })
+
+
+      $.getJSON('players.json', function(jsonData) {
+var mapper = { rows: [], cols: [{id: 'date', label: 'Date', type: 'date'},
+{id: 'count', label: 'Player Registrations', type: 'number'}
+]}
+        for ( var date in jsonData ) {
+          mapper.rows.push({
+            c: [
+              {v: new Date(date)},
+              {v: jsonData[date]}
+            ]
+          })
+        }
+        mapper.rows.sort(function(a, b) {
+            return b.c[0].v - a.c[0].v;
+        })
+        console.log(mapper);
+      // Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(mapper);
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.LineChart(document.getElementById('chart2_div'));
+      chart.draw(data, {width: 640, height: 480});
+    })
+
+
+
+  }
 
     </script>
   </head>
 
   <body>
-    <h1>ActionFPS Dashboard</h1>
+    <h1>ActionFPS Dashboard (experimental grounds)</h1>
     <p><a href="https://github.com/ActionFPS/dashboard">Edit GitHub here</a>, <a href="https://travis-ci.org/ActionFPS/dashboard">Travis build here</a></p>
     <!--Div that will hold the pie chart-->
     <div id="chart_div"></div>
+    <div id="chart2_div"></div>
   </body>
 </html>
