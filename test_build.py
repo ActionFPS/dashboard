@@ -20,6 +20,23 @@ def count(lines):
         counter.update(item)
     return counter
 
+def count_cw(lines):
+    counter = Counter()
+    for line in lines:
+        j = json.loads(line)
+        if 'clanwar' in j:
+            date = '%s-01' % j['id'][:7]
+            item = {}
+            item[date] = 1
+            counter.update(item)
+    return counter
+
+
+def build_clanwars_count():
+    with open('games.ndjson') as f:
+        with open('out/chart-clanwars.json', 'w') as fg:
+            fg.write(json.dumps(dict(count_cw(f))))
+
 def build_json():
     with open('games.ndjson') as f:
         with open('out/chart.json', 'w') as fg:
@@ -48,6 +65,7 @@ def build_monitor():
         with open('out/monitor.json', 'w') as fg:
             fg.write(json.dumps(list(convert_monitor(json.loads(f.read())))))
 
+
 if __name__ == '__main__':
     try:
         mkdir('out')
@@ -56,6 +74,7 @@ if __name__ == '__main__':
     build_json()
     build_players_json()
     build_monitor()
+    build_clanwars_count()
 
 def test_players():
     assert dict(count_players(json.loads('[{"registrationDate": "2015-01-14T11:25:17Z"}]'))) == {'2015-01-01': 1}

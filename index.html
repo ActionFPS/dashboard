@@ -29,7 +29,6 @@ var mapper = { rows: [], cols: [{id: 'date', label: 'Date', type: 'date'},
         mapper.rows.sort(function(a, b) {
             return b.c[0].v - a.c[0].v;
         })
-        console.log(mapper);
       // Create our data table out of JSON data loaded from server.
       var data = new google.visualization.DataTable(mapper);
 
@@ -54,12 +53,35 @@ var mapper = { rows: [], cols: [{id: 'date', label: 'Date', type: 'date'},
         mapper.rows.sort(function(a, b) {
             return b.c[0].v - a.c[0].v;
         })
-        console.log(mapper);
       // Create our data table out of JSON data loaded from server.
       var data = new google.visualization.DataTable(mapper);
 
       // Instantiate and draw our chart, passing in some options.
       var chart = new google.visualization.LineChart(document.getElementById('chart2_div'));
+      chart.draw(data, {width: 640, height: 480});
+    })
+
+
+      $.getJSON('chart-clanwars.json', function(jsonData) {
+var mapper = { rows: [], cols: [{id: 'date', label: 'Date', type: 'date'},
+{id: 'count', label: 'Clanwars', type: 'number'}
+]}
+        for ( var date in jsonData ) {
+          mapper.rows.push({
+            c: [
+              {v: new Date(date)},
+              {v: jsonData[date]}
+            ]
+          })
+        }
+        mapper.rows.sort(function(a, b) {
+            return b.c[0].v - a.c[0].v;
+        })
+      // Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(mapper);
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.LineChart(document.getElementById('chart3_div'));
       chart.draw(data, {width: 640, height: 480});
     })
 
@@ -83,6 +105,7 @@ m.forEach(function(item) {
     <!--Div that will hold the pie chart-->
     <div id="chart_div"></div>
     <div id="chart2_div"></div>
+    <div id="chart3_div"></div>
     <div id="monitor">
       <style scoped>
       table{
