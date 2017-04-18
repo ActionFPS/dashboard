@@ -1,5 +1,6 @@
+pub-monitor.json
+*.pyc
 games.ndjson
 out/
 .cache/
 __pycache__/
-*.pyc

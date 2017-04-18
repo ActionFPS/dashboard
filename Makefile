@@ -5,20 +5,32 @@
 	preview \
 	pip \
 
-build: games.ndjson
+TARGET = .
+export GAMES_NDJSON = $(TARGET)/games.ndjson
+export PUB_MONITOR_JSON = $(TARGET)/pub-monitor.json
+export MONITOR_API_KEY = m778017233-4e4ee163a27dda0f894c5932
+
+build: $(GAMES_NDJSON) $(PUB_MONITOR_JSON)
 	mkdir -p out
 	cp index.html out/index.html
 	python test_build.py
 
-games.ndjson:
-	wget -O games.ndjson 'https://actionfps.com/all/games.ndjson?since=2017'
+$(PUB_MONITOR_JSON):
+	curl -X POST -H "Content-Type: application/x-www-form-urlencoded" \
+		-H "Cache-Control: no-cache" \
+		-d 'api_key=$(MONITOR_API_KEY)&format=json&logs=1' \
+		-o $(PUB_MONITOR_JSON) \
+		"https://api.uptimerobot.com/v2/getMonitors"
+
+$(GAMES_NDJSON):
+	wget -O $(GAMES_NDJSON) 'https://actionfps.com/all/games.ndjson?since=2017'
 
 test:
 	python -m pytest
 
 clean:
 	rm -rf out
-	rm -f games.ndjson
+	rm -rf $(GAMES_NDJSON) $(PUB_MONITOR_JSON)
 
 preview: build
 	cd out && python -m SimpleHTTPServer
