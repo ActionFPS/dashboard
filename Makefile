@@ -17,7 +17,7 @@ build: \
 	$(PLAYERS_JSON) \
 
 	mkdir -p out
-	cp index.html out/index.html
+	cp -R client/ out/
 	python test_build.py
 
 $(PUB_MONITOR_JSON):

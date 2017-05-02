@@ -5,3 +5,4 @@ players.json
 out/
 .cache/
 __pycache__/
+.DS_Store

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ActionFPS Dashboard</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/grids-responsive-min.css">
+    <!--<![endif]-->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <div id="menu" class="pure-menu pure-menu-horizontal pure-menu-fixed">
+    <a href="#" class="pure-menu-heading">ActionFPS Dashboard</a>
+    <ul class="pure-menu-list">
+        <li class="pure-menu-item pure-menu-selected"><a href="#" class="pure-menu-link">Home</a></li>
+        <li class="pure-menu-item"><a href="#" class="pure-menu-link">Games</a></li>
+        <li class="pure-menu-item"><a href="#" class="pure-menu-link">Registrations</a></li>
+        <li class="pure-menu-item"><a href="#" class="pure-menu-link">Clanwars</a></li>
+    </ul>
+  </div>
+
+  <main class="content">
+    <div class="graph-grid pure-g">
+      <div class="pure-u-1">
+        <div class="l-box">
+          <h3 class="graph-head">Games</h3>
+          <canvas id="game-chart" width="400" height="200"></canvas>
+          <div id="chart_div"></div>
+        </div>
+      </div>
+      <div class="pure-u-1 pure-u-md-1-1 pure-u-lg-1">
+        <div class="l-box">
+          <h3 class="graph-head">Title</h3>
+          <div id="chart2_div"></div>
+        </div>
+      </div>
+      <div class="pure-u-1 pure-u-md-1-1 pure-u-lg-1">
+        <div class="l-box">
+          <h3 class="graph-head">Title</h3>
+          <div id="chart3_div"></div>
+        </div>
+      </div>
+      <div class="pure-u-1 pure-u-md-1-1 pure-u-lg-1">
+        <div class="l-box">
+          <h3 class="graph-head">Title</h3>
+          <div id="monitor"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!--Load the AJAX API-->
+  <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script src="js/renderCharts.js" charset="utf-8"></script>
+</body>
+</html>
