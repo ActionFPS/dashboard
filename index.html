@@ -91,7 +91,7 @@ var mapper = { rows: [], cols: [{id: 'date', label: 'Date', type: 'date'},
   $.getJSON('monitor.json', function(m) {
 m.reverse();
 m.forEach(function(item) {
-  $('#monitor tbody').append("<tr><td>"+item['when']+'</td><td>'+item['duration']+'</td></tr>');
+  $('#down tbody').append("<tr><td>"+item['when']+'</td><td>'+item['duration']+'</td></tr>');
 });
 
   })
@@ -121,7 +121,7 @@ table td{
 <h2>Masterserver downtime</h2>
 <p>When our servers are not visible on the masterserver</p>
 
-<table>
+<table id="down">
 <thead>
   <tr><th>When</th><th>Duration</th></tr>
 </thead>
@@ -129,6 +129,57 @@ table td{
 
 </tbody>
 </table>
+
+<section>
+
+<style scoped>
+  table#logs {
+    width:100%;
+    font-size:0.8em;
+    font-family: Courier New, Courier, monospace;
+  }
+  table#logs td {
+    text-align:left;
+  }
+  </style>
+<h2>Live logs</h2>
+
+<table id="logs">
+  <thead>
+    <tr><th>Time</th><th>Server</th><th>Message</th>
+  </thead>
+<tbody>
+<tr><td></td></tr>
+<tr><td></td></tr>
+</tbody>
+</table></section>
+
+<script type="text/javascript">
+var evtSource = new EventSource("https://actionfps.com/logs/stream/");
+var eventList = document.querySelector('table#logs tbody');
+
+evtSource.addEventListener("message", function(e) {
+  if ( !e.data ) return;
+  var items = e.data.split("\t");
+  var timeId = items[0];
+  var serverId = items[1];
+  var message = items[2]; 
+  var newNode = document.createElement("tr");
+  var timeTd = document.createElement("td");
+  timeTd.appendChild(document.createTextNode(timeId));
+  var serverTd = document.createElement("td");
+  serverTd.appendChild(document.createTextNode(serverId));
+  var messageTd = document.createElement("td");
+  messageTd.appendChild(document.createTextNode(message));
+  newNode.appendChild(timeTd);
+  newNode.appendChild(serverTd);
+  newNode.appendChild(messageTd);
+  eventList.insertBefore(newNode, eventList.firstChild);
+  if ( eventList.childNodes.length > 15 ) {
+    eventList.removeChild(eventList.lastChild);
+  }
+});
+</script>
 
     </div>
   </body>
