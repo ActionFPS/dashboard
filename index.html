@@ -161,7 +161,7 @@ table td{
 var evtSource = new EventSource("https://actionfps.com/logs/stream/");
 var eventList = document.querySelector('table#logs tbody');
 
-evtSource.addEventListener("message", function(e) {
+evtSource.addEventListener("log", function(e) {
   if ( !e.data ) return;
   var items = e.data.split("\t");
   var timeId = items[0];
