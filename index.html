@@ -1,0 +1,189 @@
+<html>
+  <head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+    // Load the Visualization API and the piechart package.
+    google.charts.load('current', {'packages':['corechart']});
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+
+      $.getJSON('chart.json', function(jsonData) {
+var mapper = { rows: [], cols: [{id: 'date', label: 'Date', type: 'date'},
+{id: 'count', label: 'Game Count', type: 'number'}
+]}
+        for ( var date in jsonData ) {
+          if (date < "2017") {
+            continue;
+          }
+          mapper.rows.push({
+            c: [
+              {v: new Date(date)},
+              {v: jsonData[date]}
+            ]
+          })
+        }
+        mapper.rows.sort(function(a, b) {
+            return b.c[0].v - a.c[0].v;
+        })
+      // Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(mapper);
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, {width: 640, height: 480});
+    })
+
+
+      $.getJSON('players.json', function(jsonData) {
+var mapper = { rows: [], cols: [{id: 'date', label: 'Date', type: 'date'},
+{id: 'count', label: 'Player Registrations', type: 'number'}
+]}
+        for ( var date in jsonData ) {
+          mapper.rows.push({
+            c: [
+              {v: new Date(date)},
+              {v: jsonData[date]}
+            ]
+          })
+        }
+        mapper.rows.sort(function(a, b) {
+            return b.c[0].v - a.c[0].v;
+        })
+      // Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(mapper);
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.LineChart(document.getElementById('chart2_div'));
+      chart.draw(data, {width: 640, height: 480});
+    })
+
+
+      $.getJSON('chart-clanwars.json', function(jsonData) {
+var mapper = { rows: [], cols: [{id: 'date', label: 'Date', type: 'date'},
+{id: 'count', label: 'Clanwars', type: 'number'}
+]}
+        for ( var date in jsonData ) {
+          mapper.rows.push({
+            c: [
+              {v: new Date(date)},
+              {v: jsonData[date]}
+            ]
+          })
+        }
+        mapper.rows.sort(function(a, b) {
+            return b.c[0].v - a.c[0].v;
+        })
+      // Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(mapper);
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.LineChart(document.getElementById('chart3_div'));
+      chart.draw(data, {width: 640, height: 480});
+    })
+
+
+
+  }
+  $.getJSON('monitor.json', function(m) {
+m.reverse();
+m.forEach(function(item) {
+  $('#down tbody').append("<tr><td>"+item['when']+'</td><td>'+item['duration']+'</td></tr>');
+});
+
+  })
+
+    </script>
+  </head>
+
+  <body>
+    <h1>ActionFPS Dashboard (experimental grounds)</h1>
+    <p><a href="https://github.com/ActionFPS/dashboard">Edit GitHub here</a>, <a href="https://travis-ci.org/ActionFPS/dashboard">Travis build here</a></p>
+    <!--Div that will hold the pie chart-->
+    <div id="chart_div"></div>
+    <div id="chart2_div"></div>
+    <div id="chart3_div"></div>
+    <div id="monitor">
+      <style scoped>
+      table{
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+table td{
+  border: 1px solid black;
+  text-align:right;
+}
+
+      </style>
+<h2>Masterserver downtime</h2>
+<p>When our servers are not visible on the masterserver</p>
+
+<table id="down">
+<thead>
+  <tr><th>When</th><th>Duration</th></tr>
+</thead>
+<tbody>
+
+</tbody>
+</table>
+
+<section>
+
+<style scoped>
+  table#logs {
+    width:100%;
+    font-size:0.8em;
+    font-family: Courier New, Courier, monospace;
+  }
+  table#logs td {
+    text-align:left;
+  }
+  </style>
+<h2>Live logs</h2>
+
+<table id="logs">
+  <thead>
+    <tr><th>Time</th><th>Server</th><th>Message</th>
+  </thead>
+<tbody>
+<tr><td></td></tr>
+<tr><td></td></tr>
+</tbody>
+</table></section>
+
+<script type="text/javascript">
+var evtSource = new EventSource("https://actionfps.com/logs/stream/");
+var eventList = document.querySelector('table#logs tbody');
+
+evtSource.addEventListener("log", function(e) {
+  if ( !e.data ) return;
+  var items = e.data.split("\t");
+  var timeId = items[0];
+  var serverId = items[1];
+  var message = items[2]; 
+  var newNode = document.createElement("tr");
+  var timeTd = document.createElement("td");
+  timeTd.appendChild(document.createTextNode(timeId));
+  var serverTd = document.createElement("td");
+  serverTd.appendChild(document.createTextNode(serverId));
+  var messageTd = document.createElement("td");
+  messageTd.appendChild(document.createTextNode(message));
+  newNode.appendChild(timeTd);
+  newNode.appendChild(serverTd);
+  newNode.appendChild(messageTd);
+  eventList.insertBefore(newNode, eventList.firstChild);
+  if ( eventList.childNodes.length > 15 ) {
+    eventList.removeChild(eventList.lastChild);
+  }
+});
+</script>
+
+    </div>
+  </body>
+</html>
